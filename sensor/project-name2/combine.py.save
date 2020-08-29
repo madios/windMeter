@@ -1,0 +1,43 @@
+import numpy as np
+
+import imuheadingTest2
+import testI2CMLX
+
+avg = 0
+vin = 355.0
+vin1 = 0.0
+vin2 = 5.0
+vin3 = 355.0
+vin4 = 0.0
+vin5 = 0.0
+vin6 = 355.0
+vin7 = 0.0
+vin8 = 355.0
+vin9 = 2.0
+vin10 = 355.0
+arr1 = [np.cos(vin/180*np.pi), np.cos(vin2/180*np.pi), np.cos(vin3/180*np.pi),np.cos(vin4/180*np.pi),np.cos(vin5/180*np.pi), \
+        np.cos(vin6/180*np.pi), np.cos(vin7/180*np.pi), np.cos(vin8/180*np.pi),np.cos(vin9/180*np.pi),np.cos(vin10/180*np.pi)]
+arr2 = [np.sin(vin/180*np.pi), np.sin(vin2/180*np.pi), np.sin(vin3/180*np.pi),np.sin(vin4/180*np.pi),np.sin(vin5/180*np.pi), \
+        np.sin(vin6/180*np.pi), np.sin(vin7/180*np.pi), np.sin(vin8/180*np.pi),np.sin(vin9/180*np.pi),np.sin(vin10/180*np.pi)]
+
+
+imu = imuheadingTest2.test()
+mlx1 = testI2CMLX.mlx()
+heading = imuheadingTest2.measure(imu)
+
+arr1[0] = np.cos(heading/180*np.pi)
+arr2[0]  = np.sin(heading/180*np.pi)
+
+dir = testI2CMLX.measure(mlx1)
+
+arr1[1] = np.cos(dir/180*np.pi)
+arr2[1]  = np.sin(dir/180*np.pi)
+#print(heading)
+#print(dir)
+        ans = 360 - np.arctan2(np.sum(arr2), np.sum(arr1)) * 180 / np.pi 
+#        ans = np.arctan2(arr2[0], arr1[0]) * 180 / np.pi  
+cccx        if ans <0:
+            ans = ans + 360
+        #print "heading: " +  str(math.floor(heading)) + "  dir: " + str(math.floor(dir))+ "    avg: " + str(ans)
+        vin = heading
+        vin2 = ans

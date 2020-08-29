@@ -1,0 +1,36 @@
+# This example shows using two TSL2491 light sensors attached to TCA9548A channels 0 and 1.
+# Use with other I2C sensors would be similar.
+import time
+import board
+import busio
+import adafruit_tca9548a
+import adafruit_mlx90393
+import math
+# Create I2C bus as normal
+i2c = busio.I2C(board.SCL, board.SDA)
+
+print("start")
+# Create the TCA9548A object and give it the I2C bus
+tca = adafruit_tca9548a.TCA9548A(i2c)
+
+print("start")
+# For each sensor, create it using the TCA9548A channel instead of the I2C object
+SENSOR = adafruit_mlx90393.MLX90393(tca[0], gain=adafruit_mlx90393.GAIN_5X)
+#tsl1 = adafruit_tsl2591.TSL2591(tca[0])
+#tsl2 = adafruit_tsl2591.TSL2591(tca[1])
+
+
+print("start")
+# Loop and profit!
+while True:
+    MX, MY, MZ = SENSOR.magnetic
+#    print("[{}]".format(time.monotonic()))
+#    print("X: {} uT".format(MX))
+#    print("Y: {} uT".format(MY))
+#    print("Z: {} uT".format(MZ))
+    theta1 = math.atan2(MX, MY)  
+    print("atan2(-0.9, -0.9) : ", theta1*180/math.pi) 
+    # Display the status field if an error occured, etc.
+    if SENSOR.last_status > adafruit_mlx90393.STATUS_OK:
+        SENSOR.display_status()
+    time.sleep(0.2)
