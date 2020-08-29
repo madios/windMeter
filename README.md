@@ -1,3 +1,3 @@
 Welcommen 
 
-This is double Peters code for our windMeter project
+This is double Peter code for our windMeter project
