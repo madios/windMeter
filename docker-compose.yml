@@ -1,0 +1,12 @@
+version: "2"
+volumes:
+  balena-data:
+services:
+  app:
+    build: ./src
+    restart: always
+    cap_add:
+      - SYS_RAWIO
+    privileged: true
+    volumes:
+      - "balena-data:/data"
