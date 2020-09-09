@@ -6,7 +6,7 @@ RUN [ "cross-build-start" ]
 
 WORKDIR /usr/src/app
 
-RUN install_packages dnsmasq wireless-tools gdb python3-dev wget netcat
+RUN install_packages dnsmasq wireless-tools gdb python3-dev wget netcat sqlite
 RUN pip3 install paho-mqtt certifi RPi.GPIO
 
 
